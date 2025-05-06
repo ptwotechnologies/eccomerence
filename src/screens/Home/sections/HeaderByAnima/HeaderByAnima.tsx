@@ -1,121 +1,130 @@
-import React from "react";
-import { Input } from "../../../../components/ui/input";
-import { Separator } from "../../../../components/ui/separator";
+'use client';
+import React, { useState } from 'react';
+import { Input } from '../../../../components/ui/input';
+import { Separator } from '../../../../components/ui/separator';
+import {
+  Search,
+  Menu,
+  Heart,
+  ShoppingCart,
+  ChevronDown,
+  Percent,
+} from 'lucide-react';
 
-export const HeaderByAnima = (): JSX.Element => {
+export const HeaderByAnima = () => {
   // Navigation links data
   const navLinks = [
-    { name: "Home", hasDropdown: true },
-    { name: "Shop", hasDropdown: true },
-    { name: "Blog", hasDropdown: true },
-    { name: "Pages", hasDropdown: true },
-    { name: "Contact", hasDropdown: false },
+    { name: 'Home', hasDropdown: true },
+    { name: 'Shop', hasDropdown: true },
+    { name: 'Blog', hasDropdown: true },
+    { name: 'Pages', hasDropdown: true },
+    { name: 'Contact', hasDropdown: false },
   ];
 
-  return (
-    <header className="w-full bg-transparent">
-      {/* Top navigation bar */}
-      <div className="w-full h-[74px] bg-white flex items-center justify-between px-3">
-        {/* Logo */}
-        <div className="w-[155px] h-11 bg-[url(/logo.png)] bg-cover bg-[50%_50%]" />
+  const [searchText, setSearchText] = useState('');
 
-        {/* SearchIcon bar */}
-        <div className="w-[690px] h-[50px] rounded-[10px] border border-solid border-[#aeb0b6] flex">
+  return (
+    <header className="w-full bg-transparent shadow-sm">
+      {/* Top navigation bar */}
+      <div className="flex w-full h-20 bg-white items-center justify-between px-6">
+        {/* Logo */}
+        <div className="w-40 h-11 bg-[url(/logo.png)] bg-cover bg-center hover:opacity-90 transition cursor-pointer" />
+
+        {/* Search bar */}
+        <div className="flex transition w-full max-w-xl h-12 rounded-lg border border-solid border-gray-300 overflow-hidden hover:border-gray-400">
           {/* Categories dropdown */}
-          <div className="h-full flex items-center pl-[31px] pr-4">
-            <div className="[font-family:'DM_Sans',Helvetica] font-normal text-[#13172b] text-lg leading-10">
+          <div className="flex transition h-full items-center pl-4 pr-3 bg-gray-50 cursor-pointer hover:bg-gray-100">
+            <div className="font-medium text-gray-800 text-base whitespace-nowrap">
               All Categories
             </div>
-            <img className="w-[11px] h-10 ml-3" alt="Icon" src="/icon-1.svg" />
+            <ChevronDown className="ml-2 w-4 h-4 text-gray-600" />
           </div>
 
-          {/* SearchIcon input */}
-          <div className="flex-1 h-full flex items-center border-l border-[#aeb0b6]">
+          {/* Search input */}
+          <div className="flex flex-1 h-full items-center border-l border-gray-300">
             <Input
-              className="border-none h-full pl-[31px] [font-family:'DM_Sans',Helvetica] font-normal text-[#5e626f] text-lg"
-              placeholder="Enter SearchIcon Products"
+              className="border-none h-full pl-4 text-base text-gray-700 focus:ring-0"
+              placeholder="Search Products"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
             />
             <div className="pr-4">
-              <img
-                className="w-4 h-4"
-                alt="SearchIcon button"
-                src="/button.svg"
-              />
+              <button className="transition p-2 rounded-full hover:bg-gray-100">
+                <Search className="w-5 h-5 text-gray-700" />
+              </button>
             </div>
           </div>
         </div>
 
         {/* Right section */}
-        <div className="flex items-center gap-4">
-          <div className="[font-family:'DM_Sans',Helvetica] font-normal text-[#5e626f] text-base text-right leading-4">
-            Support
+        <div className="flex items-center gap-6 ml-6">
+          <div className="flex flex-col items-end">
+            <div className="font-medium text-gray-600 text-sm">Support</div>
+            <div className="font-bold text-lg text-gray-800">894-555-0123</div>
           </div>
-          <div className="[font-family:'Aoboshi_One',Helvetica] font-normal text-lg text-right leading-[18px] text-[#13172b]">
-            894
+          <div className="transition p-2 rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer">
+            <Menu className="w-6 h-6 text-gray-700" />
           </div>
-          <img className="w-10 h-10" alt="Icon" src="/icon.svg" />
         </div>
       </div>
 
       {/* Bottom navigation bar */}
-      <div className="w-full h-[77px] bg-[#feeb9d] flex items-center px-3">
+      <div className="flex w-full h-16 bg-amber-100 items-center px-6">
         {/* Products category dropdown */}
-        <div className="h-[46px] bg-white rounded flex items-center px-4">
-          <img className="w-4 h-4" alt="Icon" src="/icon-61.svg" />
-          <div className="ml-3 [font-family:'DM_Sans',Helvetica] font-semibold text-[#13172b] text-base leading-[18px]">
+        <div className="flex transition h-10 bg-white rounded items-center px-4 cursor-pointer hover:bg-gray-50 shadow-sm">
+          <Menu className="w-4 h-4 text-gray-700" />
+          <div className="ml-3 font-semibold text-gray-800 text-sm">
             Products Category
           </div>
-          <img className="w-2.5 h-4 ml-4" alt="Icon" src="/icon-13.svg" />
+          <ChevronDown className="w-4 h-4 ml-3 text-gray-600" />
         </div>
 
-        <Separator orientation="vertical" className="h-6 mx-4 bg-[#5e626f]" />
+        <Separator orientation="vertical" className="h-6 mx-4 bg-gray-400" />
 
         {/* Navigation links */}
         <nav className="flex h-full">
           {navLinks.map((link, index) => (
-            <div key={index} className="h-full flex items-center px-4">
-              <div className="[font-family:'Aoboshi_One',Helvetica] font-normal text-[#13172b] text-base leading-4">
+            <div
+              key={index}
+              className="flex transition h-full items-center px-4 cursor-pointer hover:bg-amber-200"
+            >
+              <div className="font-medium text-gray-800 text-base">
                 {link.name}
               </div>
               {link.hasDropdown && (
-                <img className="w-2.5 h-4 ml-2" alt="Icon" src="/icon-5.svg" />
+                <ChevronDown className="w-4 h-4 ml-1 text-gray-600" />
               )}
             </div>
           ))}
         </nav>
 
-        <Separator
-          orientation="vertical"
-          className="h-6 ml-auto bg-[#5e626f]"
-        />
+        <Separator orientation="vertical" className="h-6 ml-auto bg-gray-400" />
 
         {/* Right section with deal and cart */}
-        <div className="flex items-center gap-4 ml-4">
+        <div className="flex items-center gap-6 ml-4">
           {/* Deal section */}
-          <div className="flex items-center">
-            <img className="w-[18px] h-[21px]" alt="Icon" src="/icon-64.svg" />
-            <div className="ml-2 [font-family:'Aoboshi_One',Helvetica] font-normal text-[#cc0d39] text-xl leading-[normal]">
-              Deal
-            </div>
-            <img className="w-4 h-[26px] ml-4" alt="Icon" src="/icon-62.svg" />
+          <div className="flex transition items-center cursor-pointer hover:opacity-80">
+            <Percent className="w-5 h-5 text-red-600" />
+            <div className="ml-2 font-bold text-red-600 text-lg">Deal</div>
+            <ChevronDown className="w-4 h-4 ml-1 text-gray-700" />
           </div>
 
           {/* Wishlist */}
-          <div className="flex items-center relative">
-            <img className="w-6 h-6" alt="Icon" src="/icon-60.svg" />
-            <div className="absolute w-5 h-5 -top-1 left-3.5 bg-[#f7941f] rounded-[10px] flex items-center justify-center">
-              <div className="[font-family:'DM_Sans',Helvetica] font-medium text-xs text-center text-[#13172b]">
+          <div className="flex transition items-center relative cursor-pointer hover:opacity-80">
+            <Heart className="w-6 h-6 text-gray-700" />
+            <div className="flex absolute w-5 h-5 -top-1 left-3 bg-amber-500 rounded-full items-center justify-center shadow-sm">
+              <div className="font-medium text-xs text-center text-gray-800">
                 12
               </div>
             </div>
-            <img className="w-4 h-[26px] ml-4" alt="Icon" src="/icon-62.svg" />
+            <ChevronDown className="w-4 h-4 ml-2 text-gray-700" />
           </div>
 
           {/* Cart */}
-          <div className="flex items-center relative">
-            <img className="w-[21px] h-6" alt="Icon" src="/icon-66.svg" />
-            <div className="absolute w-5 h-5 -top-1 left-[11px] bg-[#f7941f] rounded-[10px] flex items-center justify-center">
-              <div className="[font-family:'DM_Sans',Helvetica] font-medium text-xs text-center text-[#13172b]">
+          <div className="flex transition items-center relative cursor-pointer hover:opacity-80">
+            <ShoppingCart className="w-6 h-6 text-gray-700" />
+            <div className="flex absolute w-5 h-5 -top-1 left-3 bg-amber-500 rounded-full items-center justify-center shadow-sm">
+              <div className="font-medium text-xs text-center text-gray-800">
                 01
               </div>
             </div>

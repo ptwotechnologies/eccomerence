@@ -1,22 +1,44 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import React from "react";
-import { Button } from "../../../../components/ui/button";
-import { Card, CardContent } from "../../../../components/ui/card";
+'use client';
+
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
+import React, { useRef } from 'react';
+import { Button } from '../../../../components/ui/button';
+import { Card, CardContent } from '../../../../components/ui/card';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-} from "../../../../components/ui/carousel";
+  type CarouselApi,
+} from '../../../../components/ui/carousel';
 
 export const SectionWrapperByAnima = (): JSX.Element => {
+  // State for carousel API
+  const [api, setApi] = React.useState<CarouselApi>();
+  const [current, setCurrent] = React.useState(0);
+  const [count, setCount] = React.useState(0);
+
+  // Track the current slide and total count
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap());
+
+    api.on('select', () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
+
   // Category data for mapping
   const categories = [
-    { name: "Man Shirts", image: "/category-image.png" },
-    { name: "Denim Jeans", image: "/category-image-1.png" },
-    { name: "Casual Suit", image: "/category-image-2.png" },
-    { name: "Summer Dress", image: "/category-image-3.png" },
-    { name: "Sweaters", image: "/category-image-4.png" },
-    { name: "Jackets", image: "/category-image-5.png" },
+    { name: 'Man Shirts', image: '/category-image.png' },
+    { name: 'Denim Jeans', image: '/category-image-1.png' },
+    { name: 'Casual Suit', image: '/category-image-2.png' },
+    { name: 'Summer Dress', image: '/category-image-3.png' },
+    { name: 'Sweaters', image: '/category-image-4.png' },
+    { name: 'Jackets', image: '/category-image-5.png' },
   ];
 
   return (
@@ -42,24 +64,35 @@ export const SectionWrapperByAnima = (): JSX.Element => {
             <Button
               variant="outline"
               size="icon"
-              className="w-12 h-12 rounded-3xl border border-solid border-[#5e626f]"
+              className="w-12 h-12 rounded-3xl border border-solid border-[#5e626f] relative"
+              onClick={() => api?.scrollPrev()}
+              disabled={current === 0}
             >
               <ChevronLeftIcon className="h-5 w-5" />
-              <div className="absolute w-2.5 h-2.5 top-[35px] left-[3px] bg-[#13172b] rounded-[5px]" />
+              <div className="absolute w-2.5 h-2.5 bottom-2 left-2 bg-[#13172b] rounded-[5px]" />
             </Button>
 
             <Button
               variant="outline"
               size="icon"
-              className="w-12 h-12 rounded-3xl border border-solid border-[#5e626f]"
+              className="w-12 h-12 rounded-3xl border border-solid border-[#5e626f] relative"
+              onClick={() => api?.scrollNext()}
+              disabled={current === count - 1}
             >
               <ChevronRightIcon className="h-5 w-5" />
-              <div className="absolute w-2.5 h-2.5 top-[3px] left-[35px] bg-[#13172b] rounded-[5px]" />
+              <div className="absolute w-2.5 h-2.5 top-2 right-2 bg-[#13172b] rounded-[5px]" />
             </Button>
           </div>
         </div>
 
-        <Carousel className="w-full">
+        <Carousel
+          className="w-full"
+          opts={{
+            align: 'start',
+            loop: false,
+          }}
+          setApi={setApi}
+        >
           <CarouselContent className="-ml-4">
             {categories.map((category, index) => (
               <CarouselItem
@@ -84,7 +117,7 @@ export const SectionWrapperByAnima = (): JSX.Element => {
                       <img
                         className="absolute w-1.5 h-[190px] top-[18px] right-[-12px] z-10"
                         alt="Divider"
-                        src={`/image${index === 0 ? "" : `-${index}`}.png`}
+                        src={`/image${index === 0 ? '' : `-${index}`}.png`}
                       />
                     )}
                   </CardContent>

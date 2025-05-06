@@ -1,4 +1,4 @@
-// File: C:\Users\Lenovo\Downloads\project-bolt-sb1-5xtcztuj\project\src\app\layout.tsx
+// File: C:\Users\Lenovo\eccomerence\src\app\layout.tsx
 import * as entry from '../../../src/app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
